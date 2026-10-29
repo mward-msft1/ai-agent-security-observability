@@ -37,6 +37,15 @@ action manifests, then pinned to commit SHAs: checkout **v7.0.1**, setup-python
 to its commit. These actions use Node 24; `windows-latest` is the intended
 supported hosted-runner target. Local YAML checking doesn't execute their code.
 
+## Hosted GitHub Actions verification
+
+The [implementation validation run](https://github.com/mward-msft1/ai-agent-security-observability/actions/runs/40800359548)
+at commit `1e5cc4ab9ee86de54e12c0cd89f4ee3003e8587e` completed **successfully**.
+Both clean Windows hosted jobs passed: base collector tests/schema/wheel/
+dependency advisory/CLI restore-version checks, and pinned SDK install/
+dependency consistency/real offline span checks. This is actual hosted
+execution, not inferred from YAML syntax. No live tenant job was dispatched.
+
 SDK console tests forbid socket connects and assert a real invocation span
 exists. They also assert the synthetic prompt/response is absent by default
 and present only in opt-in mode. This avoids passing a no-op instrumentation
@@ -53,8 +62,9 @@ package is installed solely to hide its import warning.
 - The live read test is **explicitly skipped** without its approval flag.
   SDK tests are also explicitly skipped in a base-only environment; final
   local SDK results use the environment where pinned SDKs are actually installed.
-- GitHub Actions/Azure Pipelines remote execution and GitHub Environment
-  protection behavior are not inferred from local YAML validation.
+- Azure Pipelines execution, the manual live-read GitHub workflow and GitHub
+  Environment protection behavior remain unverified. The hosted offline/SDK
+  GitHub run above is the only pipeline execution claimed here.
 - No live KQL semantic/schema binding. Structural checks are not a Kusto
   compiler. Each native table needs its documented connector/product. Native
   CopilotActivity cannot be a custom Logs Ingestion API destination.
