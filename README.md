@@ -195,3 +195,8 @@ Offline behavior is tested; live tenant policies, connectors, content export,
 model invocation and ingestion require customer prerequisites and are **not
 claimed executed**. This repository does not automatically apply policies or
 provision live resources. See [validation](docs/validation.md) before deployment.
+
+## License
+
+This repository is licensed under the [MIT License](LICENSE). Linked
+third-party materials remain subject to their own licenses.
