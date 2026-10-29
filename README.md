@@ -56,6 +56,24 @@ indicators over time. Defender findings and Entra risk add security context.
 These are different signals, not interchangeable scores or automatic proof
 that a person or agent breached policy. See the [CC and IRM recipes](docs/m365-policy-recipes.md).
 
+## Preserve and investigate AI evidence with eDiscovery
+
+When an AI-related finding becomes an authorized investigation, the
+[Microsoft Purview eDiscovery runbook](docs/ediscovery.md) explains how to
+create a case, assign investigators, preserve approved content with holds,
+search supported prompts and responses, review responsive items and export
+evidence with controlled access and chain-of-custody records. It also covers
+relevant files and Copilot Pages, licensing and billing prerequisites, and
+approval-controlled hold release and case closure.
+
+**eDiscovery works with evidence already captured in supported locations.**
+It doesn't automatically record every agent interaction, replace a SIEM feed
+or recover content that was never collected. The runbook distinguishes
+mailbox AI records from files and Pages containers, and separates preservation
+from destructive search-and-delete procedures. Use it alongside the
+[coverage matrix](docs/coverage.md) and [Purview collection guidance](docs/purview-policies.md)
+to confirm what evidence is available for each first- or third-party experience.
+
 ## Start with a controlled Microsoft 365 pilot
 
 1. **Identify the agents and people involved.** Record each agent's purpose,
