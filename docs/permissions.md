@@ -56,7 +56,8 @@ documentation/service discrepancy to Microsoft if polling is denied.
 | Agent 365 observability standard-app S2S | `Agent365.Observability.OtelWrite` **application** on same resource; admin consent | Standard custom-engine app; agent ID in route must match ServiceConnection ClientId. Uses `/observabilityService` [S2] |
 | Registered blueprint-agent S2S | Agentic identity token chain per official instructions; not ordinary client credentials | Registered agent instance doesn't need the same observability app-role grant; don't assume standard-app S2S works for agentic apps (`AADSTS82001`). This reference does not implement that token chain [S2] |
 | Generic HTTPS / Splunk HEC | Destination-specific token from approved secret provider; never reuse Microsoft source tokens | Write-only sink identity, approved TLS endpoint and index, no admin token. Generic sink contract must be implemented by receiver [X4] |
-| Conditional Access administration | Separate admin account/flow; not collector identity | Conditional Access Administrator, licensed supported agent/workload/user target; risk operations require corresponding reader/admin roles [E4,E9] |
+| Conditional Access administration | Separate admin account/flow; not collector identity | Conditional Access Administrator; base agent CA has P1/E3 pairing guidance, but Agent 365 agent **risk-based** CA requires Entra P2/M365 E5 or documented E7 entitlement. Risk operations need reader/admin roles [E4,E9,E11] |
+| Add service principal to inventory security group | Graph `GroupMember.ReadWrite.All` **and** `Application.ReadWrite.All` | Separate privileged administration only, delegated supported group owner/directory role also required; membership does not scope agent CA [E13] |
 | Purview DLP/labels/retention/CC/eDiscovery administration | Solution-specific Purview roles, not extra Graph collector permissions | Data Loss Prevention, Information Protection, Records/Data Lifecycle, Communication Compliance and eDiscovery role groups separately. Content viewer/investigator access differs from policy management [P5,P7] |
 | Agent 365 CLI setup | Command-specific delegated/admin resource access; see CLI reference | Minimum setup guidance: Azure Contributor + Agent ID Developer; S2S grants Agent ID Administrator; OAuth2 grants can need a separate Global Administrator. Do not run admin consent from ordinary CI [S6] |
 
@@ -71,7 +72,8 @@ Premium; Entra agent risk is a distinct capability with Agent 365 licensing
 guidance [E4,E7].
 
 Conditional Access for agents currently documents Microsoft 365 E7 **or** Agent
-365 plus at least Entra P1/M365 E3 [E9]. Agent user accounts/notifications have
+365 plus at least Entra P1/M365 E3 [E9]. **Risk-based** agent CA has the additional
+P2/M365 E5 requirement with Agent 365 (or E7) [E11]. Agent user accounts/notifications have
 Frontier preview constraints [S5]. Purview Entra-registered AI-app management
 requires **pay-as-you-go billing**, plus applicable solution entitlements and
 roles [P5,P7]. Azure Monitor/Sentinel ingest/retention and model usage have

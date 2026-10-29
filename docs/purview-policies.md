@@ -1,5 +1,11 @@
 # Purview audit, collection and data policy runbook
 
+For customer-facing **Microsoft 365 Copilot DLP, Communication Compliance and
+Insider Risk Management creation steps**, start with the
+[M365 policy recipes](m365-policy-recipes.md). This runbook provides the audit,
+custom-app runtime, labels and retention details that complement those recipes.
+Agent identity/security-group CA setup is in the [Entra runbook](entra-policies.md).
+
 **No policy is applied by the examples.** Use an isolated pilot, approved
 synthetic positive/negative data and a change record. Sources [A1-A5,P1-P7]
 resolve in [the source catalog](sources.md). Portal navigation can differ by
@@ -154,6 +160,10 @@ These are separate solutions with separate licensing/privacy/reviewer roles.
    collection prerequisites and permitted indicators; scope a pilot and
    investigate product signals such as documented risky AI patterns [P5].
    Do not relabel the repository's keyword/volume hypotheses as IRM detections.
+   For supported **agent** monitoring, also inspect the distinct default
+   **Risky Agents (preview)** policy [P11]. It is not the same as user-focused
+   Risky AI usage or Entra ID Protection agent risk; its agent types, default
+   coverage and investigation permissions differ.
 2. For **Communication Compliance**, use the generative-AI policy guidance
    and a restricted pilot reviewer group. Verify content exists under the
    supported collection policy and classifiers. A queued review is not an

@@ -76,6 +76,13 @@ package is installed solely to hide its import warning.
 
 ## Customer acceptance before production
 
+Documentation follow-up: the customer overview and M365 policy recipes add
+verified group-type/CA-targeting boundaries, native Copilot DLP, CC and IRM
+procedures, and the separate Risky Agents preview. Repository structure/link/
+citation checks passed with **57 source IDs**, 12 unchanged query files and
+two workflow structures. This update changes no runtime code and creates no
+live groups or policies; the portal procedures remain customer pilot steps.
+
 1. Select the applicable [coverage row](coverage.md), approve exact source/
    destination permissions, test native schema and retain the evidence.
 2. Use fixed synthetic prompt/response and resource-access positive/negative

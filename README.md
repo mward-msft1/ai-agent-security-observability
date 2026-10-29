@@ -5,7 +5,12 @@ agent activity**, investigating it, and routing available evidence to Microsoft
 Sentinel or another SIEM. This is an independent reference repository, not a
 Microsoft product or a promise to capture every agent interaction.
 
-**Start with [coverage and genuine gaps](docs/coverage.md)**, then use the
+**New to this reference? Read the [customer guide](docs/customer-guide.md)** for
+its purpose, security outcomes and recommended pilot. For policy setup, use the
+[Microsoft 365 DLP, CC and IRM recipes](docs/m365-policy-recipes.md) and
+[Entra security-group and agent CA instructions](docs/entra-policies.md).
+
+Then read [coverage and genuine gaps](docs/coverage.md) and use the
 [offline quickstart](docs/quickstart.md). No tenant, subscription, secret, model,
 or cloud deployment is needed for the offline examples.
 
