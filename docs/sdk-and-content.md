@@ -41,13 +41,11 @@ python -m venv .venv-sdk
 
 The lock was resolved on Windows/Python 3.14; CI exercises a clean Windows
 restore. Other OS/Python targets require their own tested lock/resolution,
-especially native wheels. Historical lock/test pins: Framework core
+especially native wheels. Locked and tested pins: Framework core
 **1.22.0**, OpenAI integration **1.17.0**, Microsoft distro **1.5.0**, Azure
-Monitor **1.8.11**, and Azure Identity **1.27.0**. The direct manifest and
-lock now disagree on Agent Framework core: `requirements-sdk.txt` requests
-**1.23.0**, but `requirements-sdk.lock` and the installed validation
-environment remain **1.22.0**. See [validation](validation.md); resolve this
-before claiming the updated direct dependency set is tested. Release package
+Monitor **1.8.11**, and Azure Identity **1.27.0**. The manifest and lock pin
+Agent Framework core to **1.22.0**, the version available from the configured
+package feed and used by the local SDK validation environment. Release package
 versions do not make every associated service feature GA.
 
 ## 2. Microsoft distro: console-only manual instrumentation [S1,S2]

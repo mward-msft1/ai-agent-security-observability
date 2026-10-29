@@ -82,15 +82,16 @@ exports, Pages containers and billing. Documentation-only checks passed for
 **17 Markdown files, 66 source IDs, 126 relative links** and balanced code
 fences; `git diff --check` passed.
 
-The full repository validator currently stops with
+At the time of the eDiscovery documentation revision, the full repository
+validator stopped with
 `ValueError: Direct SDK requirements must match the resolved lock`.
 The existing dependency update on `main` selects
 `agent-framework-core==1.23.0` in `requirements-sdk.txt`, while
 `requirements-sdk.lock` still pins 1.22.0. This mismatch predates the
 eDiscovery revision and is not repaired by this documentation-only change.
 The targeted documentation checks do not establish dependency consistency.
-Earlier execution results above remain historical, not validation of the
-updated dependencies.
+The mismatch was subsequently resolved by aligning the direct requirement to
+the available, tested 1.22.0 package; see the SDK pin alignment follow-up below.
 
 No eDiscovery case, hold, search, collection, export, purge or billing setup
 was executed against a live tenant. Customer acceptance tasks are provided
@@ -111,12 +112,21 @@ multi-destination setup, distinct from initializing a separate Azure Monitor
 provider.
 
 Documentation checks passed for citations and relative links with **77 source
-IDs**. The pre-existing direct-requirement/lock discrepancy remains: framework
-core 1.23.0 is requested by the manifest but lock/tests remain 1.22.0. The full
-repository validator therefore still fails that lock-consistency check, and
-no tests against the updated direct requirement are claimed. No live tenant
-authentication, observability export, policy, Purview or Graph operation was
-performed for this research pass.
+IDs**. At the time of this check, the direct requirement/lock discrepancy
+remained: the manifest requested framework core 1.23.0 while lock/tests used
+1.22.0. The configured package feed does not publish 1.23.0, so the manifest
+was aligned to the available, tested 1.22.0 pin. Follow-up validation results
+are recorded below. No live tenant authentication, observability export,
+policy, Purview or Graph operation was performed for this research pass.
+
+## SDK pin alignment follow-up (2026-10-29)
+
+The configured package feed returned no distribution for
+`agent-framework-core==1.23.0` (available versions ended at 1.22.0). The direct
+manifest was changed back to 1.22.0 to match the checked-in lock and previously
+tested package set; no transitive lock changes were needed. The repository
+validator passed; the SDK/collector suite passed **37 tests** with the live
+tenant test explicitly skipped, and `pip check` found no broken requirements.
 
 ## Customer acceptance before production
 
