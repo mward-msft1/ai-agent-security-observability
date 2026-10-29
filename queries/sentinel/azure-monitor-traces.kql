@@ -1,0 +1,6 @@
+// [K7] Workspace-based Application Insights. Traces require instrumentation and exporter.
+// OperationId corresponds to trace ID, not automatically a Copilot request/thread ID.
+AppDependencies
+| where TimeGenerated > ago(1d)
+| summarize Spans=count(), Failures=countif(Success == false)
+    by OperationId, AppRoleName, bin(TimeGenerated, 1h)

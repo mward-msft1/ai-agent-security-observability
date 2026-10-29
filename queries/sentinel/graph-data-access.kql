@@ -1,0 +1,10 @@
+// [E10,K8] Requires Entra P1/P2 + Microsoft Graph activity log diagnostic setting.
+// Request metadata, not request/response bodies. URI may itself contain sensitive data.
+let ApprovedAgentAppIds = dynamic(["00000000-0000-0000-0000-000000000001"]);
+MicrosoftGraphActivityLogs
+| where TimeGenerated > ago(1d)
+| where AppId in (ApprovedAgentAppIds)
+| extend ResourcePath=tostring(parse_url(RequestUri).Path)
+| summarize Requests=dcount(RequestId), Bytes=sum(ResponseSizeBytes),
+            Failures=countif(ResponseStatusCode in (401, 403))
+    by AppId, ServicePrincipalId, RequestMethod, ResourcePath, bin(TimeGenerated, 1h)

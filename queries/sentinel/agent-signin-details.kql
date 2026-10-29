@@ -1,0 +1,7 @@
+// [K6] Agent is a string containing agentic details; shape may vary.
+// Preserve for inspection rather than fabricating nested agent-ID properties.
+AADServicePrincipalSignInLogs
+| where TimeGenerated > ago(1d)
+| where isnotempty(Agent)
+| project TimeGenerated, Id, AppId, ServicePrincipalId, ResourceIdentity,
+          ResultType, ConditionalAccessStatus, CorrelationId, Agent

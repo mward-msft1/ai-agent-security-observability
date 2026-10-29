@@ -1,0 +1,13 @@
+# Copy selected values to your approved environment/secret provider; do not commit real values.
+# Environment-token mode is for bounded development. Use --auth workload for unattended Azure federation.
+ACCESS_TOKEN=
+AZURE_TENANT_ID=
+AZURE_CLIENT_ID=
+AZURE_FEDERATED_TOKEN_FILE=
+CONTENT_CAPTURE_APPROVED=false
+APPLICATIONINSIGHTS_CONNECTION_STRING=
+AZURE_OPENAI_ENDPOINT=https://REPLACE.openai.azure.com
+AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=
+A365_TENANT_ID=
+A365_AGENT_ID=
+A365_OBSERVABILITY_TOKEN=

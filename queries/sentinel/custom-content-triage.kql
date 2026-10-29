@@ -1,0 +1,9 @@
+// [N1] ANALYTIC HYPOTHESIS ONLY; false positives/negatives expected.
+// Requires explicitly approved raw Copilot export content; default collector omits it.
+// This is not a Purview violation, a Prompt Shields verdict, or proof of injection.
+AgentActivity_CL
+| where TimeGenerated > ago(1d) and Source == "interactions"
+| extend Text=tostring(Data.Raw.body.content)
+| where Text has_all ("ignore", "instructions")
+| project TimeGenerated, RecordId, ActorId, CorrelationId,
+          Finding="Keyword triage candidate; inspect authorized source content"

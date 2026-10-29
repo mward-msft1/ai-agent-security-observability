@@ -1,0 +1,8 @@
+// [K1,K2] Observed access to a labeled resource is NOT a policy violation.
+CloudAppEvents
+| where Timestamp > ago(7d) and ActionType == "CopilotInteraction"
+| mv-expand Resource = RawEventData.CopilotEventData.AccessedResources
+| where isnotempty(tostring(Resource.SensitivityLabelId))
+| project Timestamp, AccountObjectId, ReportId,
+          ResourceId=tostring(Resource.Id), LabelId=tostring(Resource.SensitivityLabelId),
+          Action=tostring(Resource.Action)

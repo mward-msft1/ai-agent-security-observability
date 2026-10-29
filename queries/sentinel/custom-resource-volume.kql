@@ -1,0 +1,8 @@
+// [N1] ANALYTIC HYPOTHESIS: unusual access volume; not proof of exfiltration.
+// Count is audit resource references, not bytes transmitted or every downstream read.
+AgentActivity_CL
+| where TimeGenerated > ago(1d)
+| where Source in ("purview-audit", "management-Audit.General", "synthetic-audit")
+| summarize ResourceReferences=sum(toint(Data.AccessedResourceCount))
+    by ActorId, bin(TimeGenerated, 15m)
+| where ResourceReferences > 100

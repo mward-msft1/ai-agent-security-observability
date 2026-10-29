@@ -1,0 +1,31 @@
+trigger:
+  branches:
+    include:
+      - main
+pr:
+  branches:
+    include:
+      - main
+pool:
+  vmImage: windows-latest
+steps:
+  - checkout: self
+    persistCredentials: false
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.14'
+  - pwsh: |
+      python -m venv .venv-ci
+      .\.venv-ci\Scripts\python.exe -m pip install -e . -r requirements-sdk.lock -r requirements-dev.txt
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      .\.venv-ci\Scripts\python.exe -m pip check
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      .\.venv-ci\Scripts\python.exe -m unittest discover -s tests -v
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      .\.venv-ci\Scripts\python.exe scripts\validate_repository.py
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      .\.venv-ci\Scripts\python.exe -m pip wheel --no-deps --wheel-dir .local\wheel .
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      .\.venv-ci\Scripts\python.exe -m pip_audit --no-deps --disable-pip --strict -r requirements-sdk.lock
+      exit $LASTEXITCODE
+    displayName: Offline SDK, collector, schema and documentation checks

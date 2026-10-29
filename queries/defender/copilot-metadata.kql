@@ -1,0 +1,9 @@
+// [K1,K2] docs/sources.md. Requires Defender for Cloud Apps M365 activity connector.
+// Audit metadata only. Inspect ActionType/RawEventData in your tenant before alerting.
+CloudAppEvents
+| where Timestamp > ago(7d)
+| where ActionType == "CopilotInteraction"
+| extend Copilot = RawEventData.CopilotEventData
+| project Timestamp, ReportId, AccountObjectId, OAuthAppId,
+          Host=tostring(Copilot.AppHost), ThreadId=tostring(Copilot.ThreadId),
+          ResourceCount=array_length(Copilot.AccessedResources)

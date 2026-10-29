@@ -1,0 +1,36 @@
+{
+  "location": "REPLACE_WITH_WORKSPACE_REGION",
+  "kind": "Direct",
+  "properties": {
+    "streamDeclarations": {
+      "Custom-AgentActivity": {
+        "columns": [
+          {"name": "TimeGenerated", "type": "datetime"},
+          {"name": "Source", "type": "string"},
+          {"name": "RecordId", "type": "string"},
+          {"name": "Operation", "type": "string"},
+          {"name": "ActorId", "type": "string"},
+          {"name": "AgentId", "type": "string"},
+          {"name": "CorrelationId", "type": "string"},
+          {"name": "Data", "type": "dynamic"}
+        ]
+      }
+    },
+    "destinations": {
+      "logAnalytics": [
+        {
+          "workspaceResourceId": "/subscriptions/REPLACE/resourceGroups/REPLACE/providers/Microsoft.OperationalInsights/workspaces/REPLACE",
+          "name": "AgentWorkspace"
+        }
+      ]
+    },
+    "dataFlows": [
+      {
+        "streams": ["Custom-AgentActivity"],
+        "destinations": ["AgentWorkspace"],
+        "transformKql": "source",
+        "outputStream": "Custom-AgentActivity_CL"
+      }
+    ]
+  }
+}

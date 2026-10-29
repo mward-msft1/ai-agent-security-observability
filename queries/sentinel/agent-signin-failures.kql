@@ -1,0 +1,11 @@
+// [K6] Entra diagnostic settings: ServicePrincipalSignInLogs.
+// Failure counts are an analytic hypothesis, NOT ID Protection's failedAccessAttempt detection.
+let ApprovedAgentAppIds = dynamic(["00000000-0000-0000-0000-000000000001"]);
+AADServicePrincipalSignInLogs
+| where TimeGenerated > ago(1d)
+| where AppId in (ApprovedAgentAppIds)
+// Some schemas describe Success/Failure while emitted records often use numeric codes.
+| where isnotempty(ResultType) and ResultType !in~ ("0", "Success")
+| summarize FailedSignIns=count(), Resources=make_set(ResourceDisplayName, 50)
+    by ServicePrincipalId, AppId, bin(TimeGenerated, 15m)
+| where FailedSignIns > 20

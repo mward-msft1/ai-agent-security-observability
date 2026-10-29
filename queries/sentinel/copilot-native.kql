@@ -1,0 +1,6 @@
+// [K4] CopilotActivity is a native table, NOT the custom schema in this repository.
+// Requires a connector that explicitly lists this table in your tenant.
+CopilotActivity
+| where TimeGenerated > ago(7d)
+| project TimeGenerated, RecordId, ActorUserId, AppHost, AgentId, AgentName,
+          RecordType, Workload, LLMEventData

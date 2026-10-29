@@ -1,0 +1,9 @@
+// [N1] AgentActivity_CL is CUSTOMER-DEFINED by config/dcr.json; not a native table.
+// This selects actual collected risky-agent state, not a local risk classifier.
+AgentActivity_CL
+| where TimeGenerated > ago(7d)
+| where Source == "risky-agents" and isnotempty(AgentId)
+| summarize arg_max(TimeGenerated, *) by AgentId
+| where tostring(Data.riskLevel) == "high"
+| project TimeGenerated, RecordId, AgentId, RiskLevel=tostring(Data.riskLevel),
+          RiskState=tostring(Data.riskState)

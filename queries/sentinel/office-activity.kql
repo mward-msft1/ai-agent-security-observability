@@ -1,0 +1,6 @@
+// [K5] Alternate older connector layout. Do not assume it also populates CopilotActivity.
+// Confirm CopilotInteraction is in the installed connector's supported record types.
+OfficeActivity
+| where TimeGenerated > ago(7d)
+| where Operation == "CopilotInteraction"
+| summarize Interactions=count() by UserId, OfficeWorkload, bin(TimeGenerated, 1d)

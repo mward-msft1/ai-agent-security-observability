@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-security-reference"
+version = "0.1.0"
+description = "Source-backed AI agent audit collectors and SIEM examples"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+azure = ["azure-identity==1.27.0"]
+
+[project.scripts]
+agent-audit = "agent_audit.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["agent_audit*"]

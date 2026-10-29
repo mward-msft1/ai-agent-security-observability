@@ -1,0 +1,6 @@
+# Exact direct versions verified 2026-10-28. See requirements-sdk.lock for all dependencies.
+agent-framework-core==1.22.0
+agent-framework-openai==1.17.0
+microsoft-opentelemetry==1.5.0
+azure-monitor-opentelemetry==1.8.11
+azure-identity==1.27.0

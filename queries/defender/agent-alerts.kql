@@ -1,0 +1,13 @@
+// [K3] Replace the synthetic identity list with approved inventory object IDs.
+// Product-generated alerts: still investigate; not every alert proves a policy breach.
+let AgentAccountObjectIds = dynamic(["00000000-0000-0000-0000-000000000001"]);
+AlertEvidence
+| where Timestamp > ago(7d)
+| where AccountObjectId in (AgentAccountObjectIds)
+| project Timestamp, AlertId, AccountObjectId
+| join kind=inner (
+    AlertInfo
+    | where Timestamp > ago(7d)
+    | project AlertId, Title, Severity, ServiceSource, DetectionSource
+) on AlertId
+| project Timestamp, AlertId, AccountObjectId, Title, Severity, ServiceSource, DetectionSource

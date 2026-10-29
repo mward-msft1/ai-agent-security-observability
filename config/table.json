@@ -1,0 +1,18 @@
+{
+  "properties": {
+    "schema": {
+      "name": "AgentActivity_CL",
+      "columns": [
+        {"name": "TimeGenerated", "type": "datetime"},
+        {"name": "Source", "type": "string"},
+        {"name": "RecordId", "type": "string"},
+        {"name": "Operation", "type": "string"},
+        {"name": "ActorId", "type": "string"},
+        {"name": "AgentId", "type": "string"},
+        {"name": "CorrelationId", "type": "string"},
+        {"name": "Data", "type": "dynamic"}
+      ]
+    },
+    "retentionInDays": 30
+  }
+}
