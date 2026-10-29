@@ -5,6 +5,8 @@ Insider Risk Management creation steps**, start with the
 [M365 policy recipes](m365-policy-recipes.md). This runbook provides the audit,
 custom-app runtime, labels and retention details that complement those recipes.
 Agent identity/security-group CA setup is in the [Entra runbook](entra-policies.md).
+For preservation, AI content searches, Copilot Pages, review sets and approved
+evidence production, follow the [eDiscovery task runbook](ediscovery.md).
 
 **No policy is applied by the examples.** Use an isolated pilot, approved
 synthetic positive/negative data and a change record. Sources [A1-A5,P1-P7]
@@ -168,12 +170,11 @@ These are separate solutions with separate licensing/privacy/reviewer roles.
    and a restricted pilot reviewer group. Verify content exists under the
    supported collection policy and classifiers. A queued review is not an
    inline block.
-3. For **eDiscovery**, an authorized case member creates a case/search over
-   the applicable mailbox/AI data location and supported **Copilot activity**
-   type. For collected Entra app interactions, official guidance documents
-   `IPM.SkypeTeams.Message.ConnectedAIApp.Entra.<AppID>` as the ItemClass.
-   Review/export through approved legal workflows, not a generic telemetry
-   service principal. This repository does not automate legal content export.
+3. For **eDiscovery**, follow the [case/hold/search/review/export tasks](ediscovery.md).
+   Select the actual user mailbox and supported **Copilot activity** type,
+   with separate sources for relevant files and Copilot Pages containers.
+   Verify hold status, capture prerequisites, licenses and evidence custody.
+   This repository does not automate legal content export or purge.
 4. Validate synthetic items in each selected solution separately. Disabling a
    pilot policy doesn't release legal holds or delete a review set.
 

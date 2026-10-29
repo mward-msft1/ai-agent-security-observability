@@ -63,6 +63,14 @@ documentation/service discrepancy to Microsoft if polling is denied.
 
 ## Licensing procurement checklist
 
+For eDiscovery portal tasks, use the separate [investigation runbook](ediscovery.md):
+case membership and task-specific Hold/Preview/Review/Export roles differ from
+Audit Reader and content-explorer access [L2,L3]. Verify target-user hold rights,
+premium review/hold capabilities and non-M365 AI PAYG costs independently.
+E3 Graph API workflows have separate PAYG/delegated requirements; app-only and
+premium API operations require E5/equivalent add-ons [L4,L7,L9]. No eDiscovery
+consent is added to the existing collectors.
+
 Confirm precise tenant offers/service plans rather than treating "E5" as a
 universal answer. Audit Standard/Premium and audit-retention entitlements differ;
 Microsoft 365 Copilot interaction export specifically needs its licensed

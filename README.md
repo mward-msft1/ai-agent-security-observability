@@ -31,6 +31,7 @@ Microsoft product.
 | Is an agent behaving unexpectedly? | Entra identity risk, Defender findings, Purview agent/user risk and clearly labeled investigation hypotheses in the [query library](queries/README.md) |
 | Which controls should we configure? | Step-by-step [Entra Conditional Access](docs/entra-policies.md) and [Microsoft Purview DLP, Communication Compliance and Insider Risk Management](docs/m365-policy-recipes.md) runbooks |
 | How do we investigate in our existing tools? | [Defender and Sentinel queries](queries/README.md), native connector guidance and [Sentinel/third-party SIEM export examples](docs/siem.md) |
+| How do we preserve and review AI evidence? | [Purview eDiscovery tasks](docs/ediscovery.md): case creation, holds, AI searches, content review, export and controlled closure |
 
 ## Three layers of protection
 
@@ -80,6 +81,9 @@ that a person or agent breached policy. See the [CC and IRM recipes](docs/m365-p
 6. **Bring the evidence into investigations.** Use the [query library](queries/README.md)
    and [SIEM guidance](docs/siem.md). Map identifiers carefully, restrict content
    access, and define an incident-response and evidence-retention process.
+   For authorized content investigations, follow the
+   [eDiscovery runbook](docs/ediscovery.md) to preserve, search, review and export
+   available interactions and relevant files.
 7. **Extend to custom and third-party agents.** Add supported
    [SDK instrumentation](docs/sdk-and-content.md) and
    [Purview integration](docs/purview-policies.md) where available.
@@ -120,6 +124,7 @@ known gaps are called out explicitly.
 | Send available records to a SIEM | [Sentinel and third-party export runbook](docs/siem.md), [custom DCR](config/dcr.json) |
 | Create security groups and configure agent access controls | [Entra governance and Conditional Access](docs/entra-policies.md) |
 | Configure Microsoft 365 Copilot DLP, CC and IRM | [Step-by-step M365 policy recipes](docs/m365-policy-recipes.md) |
+| Preserve, investigate and produce AI evidence | [eDiscovery case, hold, search, review and export tasks](docs/ediscovery.md) |
 | Configure audit, custom-app collection, labels and retention | [Purview policy runbook](docs/purview-policies.md) |
 | Instrument code and retain approved prompts/responses | [Framework, Agent 365 SDK/CLI and OTel guide](docs/sdk-and-content.md), [runnable examples](examples) |
 | Add observability checks to development pipelines | [CI/CD guidance](docs/cicd.md), [GitHub Actions](.github/workflows), [Azure Pipelines](azure-pipelines.yml) |

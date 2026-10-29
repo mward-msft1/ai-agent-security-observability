@@ -74,6 +74,28 @@ package is installed solely to hide its import warning.
 - Audit Search polling docs currently conflict on permissions; see
   [the explicit discrepancy](permissions.md). Pilot authorization is required.
 
+## eDiscovery documentation revision (2026-10-29)
+
+The [eDiscovery runbook](ediscovery.md) was checked against directly fetched
+Microsoft guidance for AI item classes, roles, holds, searches, review sets,
+exports, Pages containers and billing. Documentation-only checks passed for
+**17 Markdown files, 66 source IDs, 126 relative links** and balanced code
+fences; `git diff --check` passed.
+
+The full repository validator currently stops with
+`ValueError: Direct SDK requirements must match the resolved lock`.
+The existing dependency update on `main` selects
+`agent-framework-core==1.23.0` in `requirements-sdk.txt`, while
+`requirements-sdk.lock` still pins 1.22.0. This mismatch predates the
+eDiscovery revision and is not repaired by this documentation-only change.
+The targeted documentation checks do not establish dependency consistency.
+Earlier execution results above remain historical, not validation of the
+updated dependencies.
+
+No eDiscovery case, hold, search, collection, export, purge or billing setup
+was executed against a live tenant. Customer acceptance tasks are provided
+at the end of the runbook.
+
 ## Customer acceptance before production
 
 Documentation follow-up: the customer overview and M365 policy recipes add

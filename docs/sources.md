@@ -79,6 +79,25 @@ customer deployment. No tenant integration was used as source verification.
 | P11 | [Monitoring agents in IRM](https://learn.microsoft.com/en-us/purview/insider-risk-management-monitoring-agents) | Default Risky Agents **preview** policy, Studio/Foundry/P4AI SDK agents, guest-content limitations and no administrative-unit agent-alert support; no claimed CA risk-score equivalence |
 | P12 | [Create/manage Exchange distribution lists](https://learn.microsoft.com/en-us/exchange/recipients-in-exchange-online/manage-distribution-groups/manage-distribution-groups) | EAC Recipients > Groups > Distribution list creation, recipient permissions and controlled membership for CC scope |
 
+## eDiscovery investigation tasks
+
+The following sources were retrieved **2026-10-29** for the practitioner
+runbook. Current portal guidance is used rather than legacy-only workflows.
+Context7 helped locate AI workflow guidance; linked Microsoft pages were
+fetched directly for the final claims.
+
+| ID | Verified source | Evidence / maturity |
+|---|---|---|
+| L1 | [Search for and delete AI data](https://learn.microsoft.com/en-us/purview/edisc-search-copilot-data) | Mailbox ItemClass catalog, Copilot activity condition, application headers, separate memory items; Search And Purge and 10-item-per-mailbox deletion limit, not a collection guarantee |
+| L2 | [Workflow](https://learn.microsoft.com/en-us/purview/edisc-workflow), [setup](https://learn.microsoft.com/en-us/purview/edisc-get-started), [cases](https://learn.microsoft.com/en-us/purview/edisc-cases-manage) | Case/search/hold/review/export sequence, enterprise app prerequisites, case membership and closure releases holds; embedded-container case support preview |
+| L3 | [eDiscovery permissions](https://learn.microsoft.com/en-us/purview/edisc-permissions) | Manager vs cross-case Administrator, task-specific roles, supported mail-enabled security groups for Managers, individual Administrators |
+| L4 | [Create holds](https://learn.microsoft.com/en-us/purview/edisc-hold-create), [manage holds](https://learn.microsoft.com/en-us/purview/edisc-hold-manage) | Target-user licensing, premium hold capabilities, up-to-24-hour application, per-location status, group membership snapshot and search-to-hold query boundary |
+| L5 | [Create a search](https://learn.microsoft.com/en-us/purview/edisc-search-query) | Data-source selection, KeyQL/condition builder, statistics/sample refinement; not Sentinel Kusto |
+| L6 | [Add to review set](https://learn.microsoft.com/en-us/purview/edisc-search-add-to-review-set), [search export](https://learn.microsoft.com/en-us/purview/edisc-search-export), [review-set export](https://learn.microsoft.com/en-us/purview/edisc-review-set-export) | Search rerun/copy, indexing/version/cloud-attachment options, redaction caveats; search export 14 days from creation vs review export 30 days from completion |
+| L7 | [Billing in eDiscovery](https://learn.microsoft.com/en-us/purview/edisc-billing) | Non-M365 AI review/export storage, active and closed cases, separate E3 API PAYG activation and export metering; no prices hardcoded |
+| L8 | [eDiscovery with Copilot Pages](https://learn.microsoft.com/en-us/microsoft-365/loop/copilot-pages-ediscovery?view=o365-worldwide) | User-owned Loop container discovery, separate container source/hold, page versions and HTML review/export; OneDrive selection alone excludes embedded Pages/Notebooks |
+| L9 | [Graph eDiscovery API v1.0 overview](https://learn.microsoft.com/en-us/graph/api/resources/security-ediscovery-apioverview?view=graph-rest-1.0) | Standard delegated vs premium/app-only entitlements, workflow resources, explicit prohibition on use as journaling/mass-download replacement |
+
 ## SDKs, CLI and telemetry
 
 | ID | Verified source | Evidence / maturity |
