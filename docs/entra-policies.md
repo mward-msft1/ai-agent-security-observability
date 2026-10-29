@@ -41,6 +41,57 @@ all identities first.
    in the actual auth library/resource flow; don't log tokens or accept a
    token merely because its JWT payload looks right.
 
+### 2a. Strengthen human administrator sign-in with passkeys [E14]
+
+Passkeys protect **human user authentication**; they don't authenticate an
+autonomous app-only agent or replace agent-identity Conditional Access.
+Microsoft Entra FIDO2 passkeys are available without an additional Entra
+license. Conditional Access itself has separate licensing requirements.
+
+1. As an Authentication Policy Administrator, go to **Entra ID > Security >
+   Authentication methods > Policies > Passkey (FIDO2)**.
+2. Before opting in to passkey profiles, review the irreversible change:
+   opting in transfers global settings to a Default profile and Microsoft
+   currently documents that profile opt-in **can't be undone**.
+3. Create and assign a narrowly scoped profile to the approved human
+   administrator/operator security group. Choose allowed device-bound or
+   synced passkeys and any verified authenticator AAGUID restrictions.
+   Synced passkeys don't support attestation; without attestation Entra can't
+   guarantee a passkey's asserted type or other attributes.
+4. If the requirement is to require phishing-resistant sign-in to sensitive
+   resources, create a separate Conditional Access policy for the human users
+   and require an appropriate built-in/custom authentication strength that
+   allows the approved FIDO2 passkey. Keep approved emergency-access accounts
+   excluded and test recovery before enforcement.
+5. Test registration and sign-in on each supported platform with the pilot
+   users. Attestation is checked at registration; enabling it later does not
+   retroactively block already registered non-attested passkeys. Changing
+   AAGUID restrictions can prevent existing users from signing in, so review
+   the impact before updating an allow-list.
+
+Passkey-profile group targeting is an authentication-method configuration for
+**people**. It does not create an agent group scope or cause a passkey
+requirement to apply to noninteractive agent credentials.
+
+### 2b. Optional cross-language identity sidecar [E15]
+
+For containerized polyglot applications, the Microsoft Entra ID Auth SDK
+sidecar can centralize token acquisition/validation and downstream API calls.
+It is a separate authentication architecture, not an audit collector, agent
+registry, or requirement for this repository's examples.
+
+The sidecar API must remain inside a trusted boundary (localhost/pod-local by
+default); **never expose it publicly**. Every app within that boundary can
+reach it, so admit only trusted, secured callers. Token validation is not
+authorization: the application must still validate scopes/roles and authorize
+the requested operation. See the [official sidecar security guidance](https://learn.microsoft.com/en-us/entra/msidweb/agent-id-sdk/security)
+before deployment.
+
+Microsoft Entra PowerShell is the current scenario-focused module built on
+the Microsoft Graph PowerShell SDK [E16]. The group examples here use the
+documented portal and Graph request; this reference does not silently depend
+on the retired AzureAD module or imply a tested PowerShell automation script.
+
 ## 3. Select the correct Conditional Access target [E9]
 
 | Actual access pattern | Correct target | Important limit |

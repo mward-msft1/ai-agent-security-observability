@@ -17,7 +17,7 @@ jobs with read-only repository permissions and immutable verified action SHAs:
    and synthetic content only when explicitly selected. Socket connection
    attempts are forbidden during the console smoke test.
 
-The base job also runs pinned **pip-audit 2.9.0** against public resolved SDK
+The base job installs **pip-audit 2.10.1** from `requirements-dev.txt` and runs it against public resolved SDK
 package names/versions using its PyPI advisory service (network required).
 It fails on advisories or unavailable package evidence with `--strict`;
 it never sends private code, spool or interaction data. This advisory check is

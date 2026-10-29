@@ -8,6 +8,11 @@ Agent identity/security-group CA setup is in the [Entra runbook](entra-policies.
 For preservation, AI content searches, Copilot Pages, review sets and approved
 evidence production, follow the [eDiscovery task runbook](ediscovery.md).
 
+For developer integrations, use the [Purview Developer Platform](https://learn.microsoft.com/en-us/purview/developer/),
+which now links Agent Framework integration tutorials and official samples
+[P13]. They are implementation references, not an automatic collection
+configuration.
+
 **No policy is applied by the examples.** Use an isolated pilot, approved
 synthetic positive/negative data and a change record. Sources [A1-A5,P1-P7]
 resolve in [the source catalog](sources.md). Portal navigation can differ by
@@ -42,6 +47,11 @@ Get-AdminAuditLogConfig | Format-List UnifiedAuditLogIngestionEnabled
 
 2. If disabled, follow the official Audit enablement procedure with the
    appropriate **Audit Logs** role; don't have the collector change it.
+   The command above uses an authorized Exchange Online PowerShell session.
+   Purview compliance cmdlets use a distinct Security & Compliance PowerShell
+   connection; installing the shared ExchangeOnlineManagement module does
+   not make `Connect-ExchangeOnline` and `Connect-IPPSSession` interchangeable
+   [P14].
 3. Generate one synthetic interaction in each target experience, recording
    pilot user/app/time locally without real business data.
 4. Search the narrow time/user/operation range. For Copilot use
@@ -94,6 +104,9 @@ universal response/file/tool blocking.
 2. Confirm the exact Entra protected-app client ID and pilot app ownership.
    Arrange the Data Loss Prevention policy-management role and authorized
    `Connect-IPPSSession` separately from read-only collector auth.
+   Use the documented Security & Compliance PowerShell connection instructions
+   for the installed ExchangeOnlineManagement module; confirm the cmdlet
+   reference's **Applies to** environment before executing administration.
 3. Adapt official `New-DlpComplianceRule` **Example 4** [P7]. The documented
    shape is shown here for review; do not paste into a production tenant:
 

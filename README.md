@@ -39,7 +39,10 @@ Microsoft product.
 governs authentication and access to Entra-protected resources. Agent-risk
 Conditional Access can block a high-risk agent at the supported token boundary.
 An agent acting for a human, an autonomous agent identity and an agent's own
-user account are different policy subjects. See [Entra setup](docs/entra-policies.md).
+user account are different policy subjects. The Entra guide also covers
+group-targeted phishing-resistant passkey profiles for human operators and
+the limits of optional authentication-sidecar architectures. See
+[Entra setup](docs/entra-policies.md).
 
 **Data protection: should this information be used in this interaction?**
 Microsoft Purview Data Loss Prevention (DLP) can restrict supported Copilot

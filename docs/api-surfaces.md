@@ -4,6 +4,11 @@ This distinction prevents the common mistake of treating "Microsoft security
 graph" as a universal conversation API. The runnable implementations live in
 [collect.py](../agent_audit/collect.py) and [purview.py](../agent_audit/purview.py).
 All examples use commercial-cloud endpoints and documented API versions.
+Microsoft's [Graph security API overview](https://learn.microsoft.com/en-us/graph/security-concept-overview)
+describes a broker that federates supported, onboarded security providers and
+returns a common schema [G1]. It is not a universal event bus for every Graph
+security route, provider, agent or prompt. Confirm each endpoint, connected
+product, permission and schema independently.
 
 | Family | Actual surface | Use / source |
 |---|---|---|
@@ -95,6 +100,15 @@ Graph uses **ThreatHunting.Read.All**. The older Defender endpoint
 `api.security.microsoft.com/api/advancedhunting/run` has a different audience
 and permission model; do not copy `AdvancedHunting.Read.All` into the Graph
 permission registration.
+
+The `/beta` Graph security overview is a **preview API contract**, subject to
+change and explicitly unsupported for production use [G2]. This repository's
+beta Entra Agent ID/risky-agent examples are gated separately; the v1.0
+alerts/incidents/hunting routes above do not turn beta agent inventory or risk
+surfaces into production APIs. Microsoft's
+[Graph documentation source repository](https://github.com/microsoftgraph/microsoft-graph-docs-contrib/tree/main)
+accepts documentation edits; use the corresponding published Learn page and
+version selector to verify API contracts [G3].
 
 ## Management Activity API [A5]
 

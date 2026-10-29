@@ -47,6 +47,25 @@ customer deployment. No tenant integration was used as source verification.
 | E11 | [Target agent identities](https://learn.microsoft.com/en-us/entra/identity/conditional-access/howto-target-agent-identities), [autonomous-agent policies](https://learn.microsoft.com/en-us/entra/identity/conditional-access/policy-autonomous-agents) | Agents/Agent Users preview selections, blueprint/attribute targeting, Report-only high-risk block; risk-based CA requires additional P2/E5 pairing or E7; not ordinary user-group assignment |
 | E12 | [Create/manage Entra groups](https://learn.microsoft.com/en-us/entra/fundamentals/how-to-manage-groups), [manage agent identities](https://learn.microsoft.com/en-us/entra/agent-id/manage-agent-identities-admin) | Assigned security-group creation/owners and identity-object inventory; group membership is distinct from agent CA targeting |
 | E13 | [Add group members](https://learn.microsoft.com/en-us/graph/api/group-post-members?view=graph-rest-1.0) | Service principals supported in security groups, not M365 groups; service-principal addition requires GroupMember.ReadWrite.All plus Application.ReadWrite.All and applicable caller role |
+| E14 | [Enable passkeys (FIDO2)](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-authentication-passkeys-fido2) | Human-user passkey profiles can target groups; device-bound/synced types, attestation/AAGUID and authentication-strength options; synced passkeys don't support attestation; profile opt-in can't be undone |
+| E15 | [Entra ID Auth SDK sidecar overview](https://learn.microsoft.com/en-us/entra/msidweb/agent-id-sdk/overview), [security hardening](https://learn.microsoft.com/en-us/entra/msidweb/agent-id-sdk/security) | Containerized cross-language token acquisition/validation/downstream API sidecar; must remain inside a trusted boundary, never publicly exposed |
+| E16 | [Microsoft Entra PowerShell](https://learn.microsoft.com/en-us/powershell/entra-powershell/?view=entra-powershell) | Current scenario-focused Microsoft Graph PowerShell module and v1.0/beta cmdlet references; do not infer a command's API maturity from its module name |
+
+## Graph security and source-of-truth documentation
+
+The following links were supplied for verification and retrieved **2026-10-28**.
+The Graph security overview describes a broker for supported, integrated
+security providers; it is not evidence that every Microsoft Graph security
+route or AI activity is universally collected. Microsoft Graph beta APIs are
+explicitly unsupported for production use. Microsoft Graph's documentation
+repository is a source-editing repository; Microsoft Learn is the published
+customer reference.
+
+| ID | Verified source | Evidence / maturity |
+|---|---|---|
+| G1 | [Microsoft Graph security API overview](https://learn.microsoft.com/en-us/graph/security-concept-overview) | Broker/common-schema concept and supported security provider integrations; coverage depends on provider/entity integration |
+| G2 | [Microsoft Graph security API beta overview](https://learn.microsoft.com/en-us/graph/api/resources/security-api-overview?view=graph-rest-beta#alerts-and-incidents) | Beta endpoints can change and are not supported for production; beta alerts/incidents are not interchangeable with v1.0 contracts |
+| G3 | [Microsoft Graph documentation source repository](https://github.com/microsoftgraph/microsoft-graph-docs-contrib/tree/main) | Microsoft-owned documentation contribution source; use the corresponding Learn page/version selector to verify published API contract |
 
 ## Query schemas (native, not repository inventions)
 
@@ -78,6 +97,8 @@ customer deployment. No tenant integration was used as source verification.
 | P10 | [IRM setup](https://learn.microsoft.com/en-us/purview/insider-risk-management-configure), [templates](https://learn.microsoft.com/en-us/purview/insider-risk-management-policy-templates), [policy management](https://learn.microsoft.com/en-us/purview/insider-risk-management-policies) | Risky AI usage human scope, browser/indicator/trigger prerequisites, scoring/threshold workflow; distinct from agent-specific monitoring |
 | P11 | [Monitoring agents in IRM](https://learn.microsoft.com/en-us/purview/insider-risk-management-monitoring-agents) | Default Risky Agents **preview** policy, Studio/Foundry/P4AI SDK agents, guest-content limitations and no administrative-unit agent-alert support; no claimed CA risk-score equivalence |
 | P12 | [Create/manage Exchange distribution lists](https://learn.microsoft.com/en-us/exchange/recipients-in-exchange-online/manage-distribution-groups/manage-distribution-groups) | EAC Recipients > Groups > Distribution list creation, recipient permissions and controlled membership for CC scope |
+| P13 | [Purview Developer Platform](https://learn.microsoft.com/en-us/purview/developer/) | Current developer hub links policy APIs, Agent Framework integration tutorials and official samples; integration is not automatic content collection |
+| P14 | [Security & Compliance PowerShell](https://learn.microsoft.com/en-us/powershell/exchange/scc-powershell?view=exchange-ps) | Compliance cmdlets use ExchangeOnlineManagement module but a distinct Security & Compliance PowerShell connection; `Connect-IPPSSession` is not `Connect-ExchangeOnline` |
 
 ## eDiscovery investigation tasks
 
@@ -102,12 +123,15 @@ fetched directly for the final claims.
 
 | ID | Verified source | Evidence / maturity |
 |---|---|---|
-| S1 | [Microsoft OpenTelemetry for Agent 365](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/microsoft-opentelemetry), [upstream](https://github.com/microsoft/opentelemetry-distro-python) | New distro/manual scopes/exporters; former Agent 365 observability packages deprecated for new integrations |
+| S1 | [Microsoft OpenTelemetry for Agent 365](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/microsoft-opentelemetry), [upstream](https://github.com/microsoft/opentelemetry-distro-python) | Unified .NET/Node.js/Python distro; Azure Monitor, Agent 365 and OTLP destinations can be configured together; content logging is controllable; former Agent 365 observability packages deprecated for new integrations |
 | S2 | [Observability authentication](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/observability-authentication-setup) | Four auth scenarios, resource/permissions, delegated vs S2S routes, baggage and token resolver |
 | S3 | [Framework observability examples](https://github.com/microsoft/agent-framework/blob/main/python/samples/02-agents/observability/README.md) | OpenTelemetry, sensitive telemetry opt-in, framework/client spans; package-specific APIs locally verified |
 | S4 | [Framework OpenAI package](https://github.com/microsoft/agent-framework/blob/main/python/packages/openai/README.md), [Azure Monitor Python](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-enable?tabs=python) | OpenAIChatClient current construction and Azure Monitor configuration, distinct destination |
-| S5 | [Agent 365 SDK](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/agent-365-sdk), [Python upstream](https://github.com/microsoft/Agent365-python) | Extends existing hosted agents, runtime/tooling/notifications, agent-user/mailbox Frontier limits |
+| S5 | [Agent 365 SDK](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/agent-365-sdk), [Python upstream](https://github.com/microsoft/Agent365-python) | Extends existing hosted agents, runtime/tooling/notifications, agent-user/mailbox Frontier limits; its observability packages are deprecated for new integrations in favor of Microsoft OpenTelemetry Distro |
 | S6 | [CLI overview](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/agent-365-cli), [command reference](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/reference/cli/), [upstream](https://github.com/microsoft/Agent365-devTools), [NuGet 2.0.1](https://www.nuget.org/packages/Microsoft.Agents.A365.DevTools.Cli/2.0.1) | .NET 8+, setup/query/admin roles; 2.0.1 published 2026-10-20, restored locally; tenant setup not run |
+| S7 | [Agent 365 Samples](https://github.com/microsoft/Agent365-Samples), [S2S export details](https://github.com/microsoft/Agent365-Samples/blob/main/docs/observability-s2s.md) | Current sample S2S route includes `/observabilityService/.../otlp/...`; distinguishes registered agent-instance token contract from standard app-role S2S and documents sample-provider limitations |
+| S8 | [Agent 365 developer documentation](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/) | Integration choices, Agent 365 SDK/CLI lifecycle and sample catalog; SDK enhances existing agents and is distinct from Microsoft 365 Agents SDK |
+| S9 | [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) | Official framework samples/upstream, .NET and Python; Go SDK is separately maintained; moving main branch is not a tested package lock |
 | F1 | [Foundry framework tracing](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/trace-agent-framework) | Tracing GA for prompt/hosted agents; workflow/external agents preview; instrumentation/content/project prerequisites |
 
 Exact resolved Python versions are [locked](../requirements-sdk.lock).

@@ -18,11 +18,17 @@ private repository's deployment scripts.
 | Purview runtime Graph APIs | Compute protection scope and submit/evaluate selected user content | Export existing analytics/content from all AI services |
 
 **Current official Agent 365 guidance deprecates the Agent 365 Observability
-SDK packages for new integrations**. Use Microsoft OpenTelemetry Distro, not
+SDK packages for new integrations** [S1,S5]. Use Microsoft OpenTelemetry
+Distro, not
 `microsoft-agents-a365-observability-*` copied from an older sample.
 `microsoft-agents-a365-runtime` (verified published version 2.0.0) remains
 relevant for runtime/identity capabilities; notifications/tooling are separate.
 We do not install unneeded mail/tool permissions merely to create traces.
+The [official Agent 365 samples](https://github.com/microsoft/Agent365-Samples)
+are additional implementation references, but their SDK constraints and
+exporter providers are not this repository's tested lock. Their current S2S
+guide specifies `/observabilityService/.../otlp/...`; do not copy older
+non-`/otlp` route examples [S7].
 
 ## 1. Restore and validate packages
 
@@ -35,12 +41,14 @@ python -m venv .venv-sdk
 
 The lock was resolved on Windows/Python 3.14; CI exercises a clean Windows
 restore. Other OS/Python targets require their own tested lock/resolution,
-especially native wheels. Direct pins: Framework core **1.22.0**, OpenAI
-integration **1.17.0**, Microsoft distro **1.5.0**, Azure Monitor **1.8.11**,
-Azure Identity **1.27.0**. Latest metadata listed core 1.23.0, but it wasn't
-resolvable from this environment's configured index; we selected and actually
-validated compatible 1.22.0 rather than claim an untested newest version.
-Release package versions do not make every associated service feature GA.
+especially native wheels. Historical lock/test pins: Framework core
+**1.22.0**, OpenAI integration **1.17.0**, Microsoft distro **1.5.0**, Azure
+Monitor **1.8.11**, and Azure Identity **1.27.0**. The direct manifest and
+lock now disagree on Agent Framework core: `requirements-sdk.txt` requests
+**1.23.0**, but `requirements-sdk.lock` and the installed validation
+environment remain **1.22.0**. See [validation](validation.md); resolve this
+before claiming the updated direct dependency set is tested. Release package
+versions do not make every associated service feature GA.
 
 ## 2. Microsoft distro: console-only manual instrumentation [S1,S2]
 
@@ -60,8 +68,12 @@ default, rejects ambient OTLP endpoint variables, disables SDK statistics
 egress, uses an explicit synthetic Resource rather than cloud metadata
 discovery, and disables unused OpenAI Agents instrumentation. Offline SDK tests
 forbid socket connections and assert that real invocation spans are produced.
-Do not set both distro providers in the same process; choose one initialization
-path to avoid duplicate spans/provider conflicts.
+This example initializes only Microsoft OpenTelemetry Distro. Its current
+guidance supports configuring Azure Monitor and Agent 365 as destinations in
+the same distro setup. Do not initialize the separate Azure Monitor distro
+provider in the same process as this example; choose one provider setup to
+avoid conflicts or duplicate spans. The separate Azure Monitor example below
+is an alternative, not a second provider to add to this process.
 
 To instrument tools, use documented `ExecuteToolScope` / `ToolCallDetails` in
 the upstream guide [S1] around the **real tool boundary**, keeping tool
@@ -78,9 +90,9 @@ and downstream record presence, not merely process exit.
 | Scenario | Token / route | Key restriction |
 |---|---|---|
 | Standard custom-engine app, delegated OBO | Observability-scoped delegated token, `/observability` route | Explicit delegated `Agent365.Observability.OtelWrite` consent; Bot OAuth scopes must target observability |
-| Standard custom-engine app, app-only S2S | Observability app-role token, `/observabilityService` | App permission/admin consent; agent route ID = ServiceConnection ClientId |
-| Blueprint Agent ID using OBO | Agentic delegated acquisition/cache, delegated route | CLI setup doesn't necessarily configure delegated observability permission |
-| Blueprint Agent ID using S2S | Documented agentic identity chain, S2S route | **Not plain client credentials**; registered instance authorization differs from standard app |
+| Standard custom-engine app, app-only S2S | Observability app-role token, `/observabilityService/tenants/{tenant}/otlp/agents/{agent}/traces` | Standard app needs `Agent365.Observability.OtelWrite` application permission/admin consent; agent route ID = ServiceConnection ClientId |
+| Blueprint/registered Agent ID using OBO | Agentic delegated acquisition/cache, delegated `/observability` route | CLI setup doesn't necessarily configure delegated observability permission |
+| Blueprint/registered Agent ID instance using S2S | Agentic identity token chain, `/observabilityService/tenants/{tenant}/otlp/agents/{agent}/traces` | **Not plain client credentials.** Microsoft Learn documents that registered blueprint instances don't need the Observability permission/admin consent; standard/unregistered apps still need the app role [S2,S7] |
 
 The runtime example's `--agent365` mode demonstrates **only standard-app S2S**
 with a pre-acquired observability token:
@@ -94,6 +106,10 @@ with a pre-acquired observability token:
 Required values: `A365_TENANT_ID`, `A365_AGENT_ID`,
 `A365_OBSERVABILITY_TOKEN` for resource
 `api://9b975845-388f-4429-889e-eab1ef63949c`.
+For this example's **standard custom-engine S2S** scenario, `A365_AGENT_ID`
+must match the ServiceConnection client ID. The registered-agent-instance
+sample path uses its deployed instance client ID, not its blueprint, service
+principal object or agent-user ID [S2,S7].
 The synchronous resolver receives cached credentials; this short demo does
 not implement refresh/agentic token exchange. For production acquire tokens in
 the approved auth layer, key the cache by tenant/agent/resource, refresh before
@@ -109,6 +125,12 @@ Agent 365 observability is an explicit product-integrated route; **Azure Monitor
 or a generic OTLP collector alone doesn't write Purview compliance logs**.
 Even for Agent 365 export, confirm the required service/policy/licensing and
 actual compliance-view outcomes separately.
+
+For code-level Purview enforcement within Agent Framework, use the
+[Purview Developer Platform](https://learn.microsoft.com/en-us/purview/developer/)
+and its [Agent Framework integration sample](https://github.com/microsoft/agent-framework/tree/main/python/samples/05-end-to-end/purview_agent)
+as an additional current reference [P13]. It complements, but does not replace,
+the runtime API and policy boundaries described above.
 
 ## 4. Agent Framework + Azure Monitor [S3,S4]
 

@@ -96,6 +96,28 @@ No eDiscovery case, hold, search, collection, export, purge or billing setup
 was executed against a live tenant. Customer acceptance tasks are provided
 at the end of the runbook.
 
+## Supplied-source verification follow-up (2026-10-28)
+
+The user-supplied Microsoft Learn and Microsoft-owned GitHub references were
+fetched and checked against the Entra, Graph security, Purview, Agent 365,
+Microsoft OpenTelemetry, Agent Framework and PowerShell guidance. Relevant
+additions/corrections are linked in [the source catalog](sources.md): human
+passkeys versus agent identity controls; optional sidecar trust-boundary
+requirements; the registered Agent 365 S2S `/otlp` route/token distinction;
+Purview's Agent Framework developer references; Graph security broker/beta
+scope; Security & Compliance versus Exchange Online PowerShell sessions; and
+the unified Microsoft OpenTelemetry Distro's supported languages and
+multi-destination setup, distinct from initializing a separate Azure Monitor
+provider.
+
+Documentation checks passed for citations and relative links with **77 source
+IDs**. The pre-existing direct-requirement/lock discrepancy remains: framework
+core 1.23.0 is requested by the manifest but lock/tests remain 1.22.0. The full
+repository validator therefore still fails that lock-consistency check, and
+no tests against the updated direct requirement are claimed. No live tenant
+authentication, observability export, policy, Purview or Graph operation was
+performed for this research pass.
+
 ## Customer acceptance before production
 
 Documentation follow-up: the customer overview and M365 policy recipes add
