@@ -1,6 +1,6 @@
 # Microsoft 365 policy recipes: DLP, CC and IRM
 
-Use this guide after the [customer overview](customer-guide.md) and
+Use this guide after the [customer overview on the home page](../README.md) and
 [Entra group/agent CA setup](entra-policies.md). These are **manual,
 change-controlled instructions**, not commands that this repository runs.
 Microsoft 365 Copilot policy locations do not automatically cover Copilot
